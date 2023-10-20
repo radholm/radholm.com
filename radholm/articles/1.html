@@ -1,0 +1,40 @@
+<head><link rel="stylesheet" href="../style.css">
+<title># Tips For Creating A Maintainable And 'Easy Access' Unix/Linux Server</title>
+<h1>Tips For Creating A Maintainable And 'Easy Access' Unix/Linux Server</h1>
+By Fredrik Radholm at April 17, 2021<br/>
+<br/>
+<h2>USE <code>ssh-keygen</code> TO GENERATE SSH KEY PAIR FOR SSH LOGON</h2>
+When maintaining an Unix/Linux server; logging in may become somewhat of a task. Usually the local target need to authenticate itself against the server (using a password/passphrase). This type of action can be reduced by using SSH key pairs. That way, a password is not required every time when logging in.
+<br/>
+The first step towards achieving this is to generate the SSH key pair on the server. For more specific information do <code>man ssh-keygen</code> in the terminal.<br/>
+<blockquote><code>ssh-keygen<br/>cd ~/.ssh<br/>ssh-copy-id -i id_rsa.pub USERNAME@SERVERTARGET</code></blockquote>
+<br/>
+Notice how the server might request for the passphrase once again, now try logging in once again (the server will now authenticate using the key pair and not the password).<br/>
+<br/>
+<h2>UTILIZE EFFORTLESS OFFLINE SYNCHRONIZATION WITH <code>rsync</code> AND <code>bash</code> SCRIPTS</h2>
+A superb tool to install on a Unix/Linux server is <code>rsync</code>. This utility synchronizes and transfers files between the local machine and the server. The most impressive attribute is that it uses <code>delta encoding</code> to minimize network usage. Personally, I use this tool to sync my <code>markdown</code> files. The main idea of <code>rsync</code> is to handle files offline (to avoid uneccessary server overhead).
+<br/>
+<blockquote><code>sudo apt-get install rsync</code></blockquote>
+<br/>
+Out of the box, the files are ready to sync (if previously configured the key pair). <code>rsync</code> works similar to <code>cp</code>, <code>mv</code> etc. commands. See the <code>man</code> pages for more information. E.g this is how I use <code>rsync</code> to sync my files.
+<br/>
+<blockquote><code>rsync -vrP --delete-after /local/source/directory/ USERNAME@SERVERTARGET:/server/destination/directory</code></blockquote>
+<br/>
+Now this is where <code>bash</code> scripting comes in handy. The main benefit of creating scripts is that it often automates processes that are painfully repetetive. Now at the time making this I used Windows as my local machine, but with WSL2 Ubuntu (like a mimimal VM for Linux on Windows). This meant that I had to integrate a Windows shell script with intent to run a <code>bash</code> script in the WSL.<br/>
+<br/>
+Create a <code>.sh</code> file in the WSL at the <code>~</code> or <code>$HOME</code> directory with the contents: 
+<br/>
+<blockquote><code>#!/bin/sh <br> rsync -vrP --delete-after /local/source/directory/ USERNAME@SERVERTARGET:/server/destination/directory</code></blockquote>
+<br/>
+Give it the permission to execute.
+<br/>
+<blockquote><code>chmod +x EXAMPLE.sh</code></blockquote>
+<br/>
+Now it can run by:
+<br/>
+<blockquote><code>bash EXAMPLE.sh</code></blockquote>
+<br/>
+So say if I wanted this process to be automatic in Windows (I would like a one-click sync between my local files and the server's files). How do we communicate this to the WSL? To do this, create a <code>.bat</code> script file in Windows with the contents:
+<br/>
+<blockquote><code>bash -c "cd ~ ; bash EXAMPLE.sh"</code></blockquote>
+Run the script with the CMD (default) and you are done! Now we can sync our files between our local machine and remote server in WSL on Windows with one-click! In a text editor, the script could be executed via On-Save which would be neat in some cases. 

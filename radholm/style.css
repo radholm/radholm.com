@@ -1,0 +1,69 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto+Mono");
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+@import url("https://fonts.googleapis.com/css?family=Anton");
+
+body {
+  padding: 20px;
+  background-color: #cecece;
+  color: #000000;
+  /*font-family: "Roboto Mono";*/
+  font-size: 20px;
+  line-height: 28px;
+  margin: 0 auto;
+  max-width: 840px;
+}
+
+pre {
+  color: #000000;
+}
+
+blockquote {
+  color: teal;
+  font-family: monospace;
+  font-size: 18px;
+  font-weight: bold;
+  background: #b5b5b5;
+  padding: 12px 12px 12px 12px;
+  margin: 4px 0px 0px 0px;
+  border-radius: 4px;
+}
+
+a {
+  color: teal;
+  /*text-decoration: none;*/
+}
+
+a:hover {
+  color: #51afef;
+}
+
+h1 {
+  font-size: 24px;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 20px;
+  color: #000000;
+  margin-bottom: 10px;
+}
+
+code {
+  color: teal;
+  font-family: monospace;
+  font-size: 18px;
+  font-weight: bold;
+  background: #b5b5b5;
+  padding-left: 4px;
+  padding-right: 4px;
+  border-radius: 4px;
+}
+
+li {
+  color: #98be65;
+}
