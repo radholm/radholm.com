@@ -1,4 +1,13 @@
-- name: Copy folder to remote
+name: Copy folder to remote
+on:
+  push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: Copy folder content recursively to remote
         uses: garygrossgarten/github-action-scp@release
         with:
           local: radholm
