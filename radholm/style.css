@@ -35,6 +35,10 @@ header > row > h1 {
   font-size: 40px;
 }
 
+cool {
+  color: purple;
+}
+
 blockquote {
   color: teal;
   font-family: monospace;
