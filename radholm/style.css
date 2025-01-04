@@ -30,7 +30,7 @@ header > row > h1 {
   font-size: 40px;
 }
 
-header > row > a > button {
+header > row > a > .btn {
   margin: 1rem;
 }
 
@@ -75,13 +75,12 @@ blockquote {
   border-radius: 4px;
 }
 
-button {
+.btn {
   width: 88px;
-  height: 31px;
+  line-height: 31px;
   display: inline-block;
-  border: thick;
   outline-style: outset;
-  outline-color: #cccccc;
+  outline-color: hsl(0, 0%, 84%);
   text-decoration: none;
   background: #cccccc;
   color: #000000;
@@ -89,17 +88,18 @@ button {
   font-size: 1rem;
   cursor: pointer;
   text-align: center;
-  transition: all 0.2s ease-in;
+  margin: 1rem;
 }
 
-button:hover,
-button:focus {
-  background:#cccccc;
+.btn:hover,
+.btn:focus {
+  background: #cccccc;
   animation: blink 1s linear infinite;
 }
 
-button:active {
+.btn:active {
   outline-style: inset;
+  outline-color: hsla(0, 0%, 84%, 1.0);
 }
 
 a {
