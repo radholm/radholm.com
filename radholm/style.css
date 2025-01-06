@@ -16,12 +16,37 @@ body {
 
 header {
   display: flex;
-  margin-bottom: 60px;
+  flex-direction: column; /* Default stacking */
+  align-items: center;    /* Center align items */
 }
 
 header > img {
   width: 30%;
   box-shadow: 20px 16px teal;
+  margin-bottom: 1rem; /* Space between image and row */
+}
+
+header > row {
+  display: flex;
+  flex-direction: column; /* Default to stacking content in row */
+  align-items: center;
+}
+
+@media (min-width: 768px) { /* Adjust breakpoint as needed */
+  header {
+    flex-direction: row; /* Side-by-side layout for larger screens */
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  header > img {
+    margin-bottom: 0; /* Remove bottom margin for side-by-side layout */
+    margin-right: 2rem; /* Add space between image and row */
+  }
+
+  header > row {
+    align-items: flex-start; /* Align row content to the start */
+  }
 }
 
 header > row > h1 {
