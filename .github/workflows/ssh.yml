@@ -1,18 +1,20 @@
-name: Copy folder to remote
+name: Deploy to VPS
 on:
-  push
+  push:
+    branches:
+      - main
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout
-        uses: actions/checkout@v2
-      - name: Copy folder content recursively to remote
-        uses: garygrossgarten/github-action-scp@release
-        with:
-          local: radholm
-          remote: /var/www/radholm
-          rmRemote: true
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.PASSWORD }}
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H "${{ secrets.HOST }}" >> ~/.ssh/known_hosts
+      - name: Pull Latest Code on VPS
+        run: |
+          ssh "${{ secrets.SSH_USER }}"@"${{ secrets.HOST }}" "cd /var/www/ && git pull origin main"
