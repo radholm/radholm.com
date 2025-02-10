@@ -46,12 +46,11 @@ row {
 footer {
   position: fixed;
   bottom: 0;
-  max-width: 1000px;
-  border-radius: 10px 10px 0px 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
   background-color: #f3f4f6;
   text-align: center;
-  justify-content: center;
-  padding: 10px;
 }
 
 p {
