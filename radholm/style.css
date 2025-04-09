@@ -60,8 +60,9 @@ p {
 }
 
 .btn-container {
-  display: flex;
   gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 120px));
 }
 
 .btn {
