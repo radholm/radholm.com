@@ -1,8 +1,8 @@
 :root {
-  --color-text: #1f2937;
-  --color-1: #ffffff;
-  --color-2: #ededed;
-  --color-accent: #111827;
+  --color-text: black;
+  --color-2: lightgrey;
+  --color-1: lightgrey;
+  --color-accent: black;
 }
 
 @font-face {
@@ -13,8 +13,8 @@
 
 * {
   color: var(--color-text);
-  font-family: "Roboto";
-  font-weight: 400;
+  /* font-family: "Roboto"; */
+  font-weight: 100;
   text-rendering: optimizeSpeed;
 }
 
@@ -40,7 +40,8 @@ row {
 
 .card {
   background: var(--color-1);
-  border-radius: 0.625rem;
+  border: 6px outset #E8E8E8;
+  box-shadow: 4px 4px 4px 0px #9a9a9a;
   padding: 1.25rem;
   text-align: center;
 }
@@ -48,6 +49,10 @@ row {
 .card > i {
   color: var(--color-accent);
   font-size: 1.5rem;
+}
+
+.card > p {
+  text-align: left;
 }
 
 footer {
@@ -61,7 +66,7 @@ footer {
 }
 
 p {
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 .btn-container {
@@ -73,7 +78,8 @@ p {
 .btn {
   align-items: center;
   background: var(--color-1);
-  border-radius: 0.625rem;
+  border: 6px outset #E8E8E8;
+  box-shadow: 4px 4px 4px 0px #9a9a9a;
   color: var(--color-text);
   cursor: pointer;
   display: flex;
@@ -84,27 +90,27 @@ p {
   text-decoration: none;
   white-space: nowrap;
   transition:
+    border 0.3s ease-out,
+    box-shadow 0.3s ease-out;
     color 0.3s ease-out,
     background-color 0.3s ease-out;
 }
 
 .btn:hover,
 .btn:focus {
-  background: var(--color-accent);
-  color: var(--color-1);
+  box-shadow: none;
+  /* border: 6px inset white; */
 }
 
 .btn:hover i,
 .btn:focus i {
-  color: var(--color-2);
   transition:
-    color 0.3s ease-out,
-    background-color 0.3s ease-out;
+    /* color 0.3s ease-out, */
+    /* background-color 0.3s ease-out; */
 }
 
 .btn:focus:not(:focus-visible) {
-  background: var(--color-2);
-  color: var(--color-text);
+  box-shadow: 4px 4px 8px 0px #9a9a9a;
 }
 
 h1 {
