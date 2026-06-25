@@ -72,4 +72,9 @@ jobs:
           ssh-keyscan -H "${{ secrets.HOST }}" >> ~/.ssh/known_hosts
       - name: Pull Latest Code on VPS
         run: |
-          ssh "${{ secrets.SSH_USER }}"@"${{ secrets.HOST }}" "cd /var/www/ && git pull origin main"
+          ssh "${{ secrets.SSH_USER }}"@"${{ secrets.HOST }}" "
+            cd /var/www/ &&
+            git fetch origin main &&
+            git reset --hard origin/main &&
+            sed -i 's|href=\"style.css\"|href=\"style.css?v=${{ github.sha }}\"|' radholm/index.html
+          "
