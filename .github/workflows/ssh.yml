@@ -3,8 +3,63 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 jobs:
+  lighthouse:
+    name: Lighthouse
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Run Lighthouse
+        id: lighthouse
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: ./.github/lighthouserc.yml
+          temporaryPublicStorage: true
+      - name: Publish report to summary
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const results = ${{ steps.lighthouse.outputs.manifest }};
+            const links = ${{ steps.lighthouse.outputs.links }};
+            const round = (s) => Math.round(s * 100);
+            const emoji = (s) => s >= 0.9 ? '🟢' : s >= 0.5 ? '🟠' : '🔴';
+            let md = '## Lighthouse results\n\n';
+            md += '| URL | Perf | A11y | Best Practices | SEO | Report |\n';
+            md += '| --- | --- | --- | --- | --- | --- |\n';
+            for (const r of results.filter(r => r.isRepresentativeRun)) {
+              const c = r.summary;
+              const report = links[r.url] ? `[view](${links[r.url]})` : '—';
+              md += `| ${r.url} | ${emoji(c.performance)} ${round(c.performance)} `
+                + `| ${emoji(c.accessibility)} ${round(c.accessibility)} `
+                + `| ${emoji(c['best-practices'])} ${round(c['best-practices'])} `
+                + `| ${emoji(c.seo)} ${round(c.seo)} | ${report} |\n`;
+            }
+            core.summary.addRaw(md);
+            await core.summary.write();
+            if (context.eventName === 'pull_request') {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: md,
+              });
+            }
+
   deploy:
+    needs: lighthouse
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
