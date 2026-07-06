@@ -110,6 +110,16 @@ body {
   text-align: center;
   position: relative;
   z-index: 1;
+  overflow: hidden;
+}
+
+.banner {
+  display: block;
+  width: calc(100% + 2 * clamp(1.5rem, 5vw, 2.75rem));
+  margin: calc(-1 * clamp(1.5rem, 5vw, 2.75rem)) calc(-1 * clamp(1.5rem, 5vw, 2.75rem)) 2rem;
+  aspect-ratio: 640 / 480;
+  height: auto;
+  object-fit: cover;
 }
 
 .intro {
