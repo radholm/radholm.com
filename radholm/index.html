@@ -18,7 +18,146 @@
     <meta property="og:image" content="https://radholm.com/assets/radholm.png" />
 
     <link rel="canonical" href="https://radholm.com/" />
-    <link rel="stylesheet" href="style.css" />
+    <style>
+      :root {
+        --bg: #f4f5f7;
+        --surface: #ffffff;
+        --text: #1a1d21;
+        --muted: #5b6470;
+        --accent: #2563eb;
+        --border: #e2e5ea;
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.08);
+        --radius: 14px;
+        --maxw: 34rem;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+      }
+
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "Roboto", system-ui, -apple-system, "Segoe UI", Helvetica, Arial,
+          sans-serif;
+        font-weight: 300;
+        line-height: 1.6;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        min-height: 100svh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        padding: 2rem 1.25rem 4rem;
+      }
+
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        width: 100%;
+        max-width: var(--maxw);
+        padding: clamp(1.5rem, 5vw, 2.75rem);
+        text-align: center;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+      }
+
+      .banner {
+        display: block;
+        width: calc(100% + 2 * clamp(1.5rem, 5vw, 2.75rem));
+        margin: calc(-1 * clamp(1.5rem, 5vw, 2.75rem)) calc(-1 * clamp(1.5rem, 5vw, 2.75rem)) 2rem;
+        aspect-ratio: 640 / 480;
+        height: auto;
+        object-fit: cover;
+      }
+
+      .intro {
+        margin-bottom: 2rem;
+      }
+
+      h1 {
+        color: var(--text);
+        font-size: clamp(2rem, 7vw, 2.75rem);
+        font-weight: 300;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+      }
+
+      .title {
+        color: var(--muted);
+        font-size: clamp(1rem, 4vw, 1.2rem);
+        margin-top: 0.5rem;
+      }
+
+      .links {
+        list-style: none;
+        padding: 0;
+        display: grid;
+        gap: 0.75rem;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+      }
+
+      .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        background: transparent;
+        color: var(--text);
+        font-size: 1rem;
+        text-decoration: none;
+        transition:
+          border-color 0.2s ease,
+          color 0.2s ease,
+          background-color 0.2s ease,
+          transform 0.1s ease;
+      }
+
+      .btn:hover,
+      .btn:focus-visible {
+        border-color: var(--accent);
+        color: var(--accent);
+        background: color-mix(in srgb, var(--accent) 8%, transparent);
+      }
+
+      .btn:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+
+      .btn:active {
+        transform: translateY(1px);
+      }
+
+      .icon {
+        width: 1.25rem;
+        height: 1.25rem;
+        flex: none;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+        }
+      }
+    </style>
+    <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <noscript><link rel="stylesheet" href="style.css" /></noscript>
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png" />
@@ -27,23 +166,6 @@
   </head>
 
   <body>
-    <div class="waves" aria-hidden="true">
-      <div class="wave">
-        <svg viewBox="0 0 2880 320" preserveAspectRatio="none">
-          <path d="M0 160 Q 360 80 720 160 T 1440 160 T 2160 160 T 2880 160 V320 H0 Z" />
-        </svg>
-      </div>
-      <div class="wave">
-        <svg viewBox="0 0 2880 320" preserveAspectRatio="none">
-          <path d="M0 200 Q 360 130 720 200 T 1440 200 T 2160 200 T 2880 200 V320 H0 Z" />
-        </svg>
-      </div>
-      <div class="wave">
-        <svg viewBox="0 0 2880 320" preserveAspectRatio="none">
-          <path d="M0 240 Q 360 190 720 240 T 1440 240 T 2160 240 T 2880 240 V320 H0 Z" />
-        </svg>
-      </div>
-    </div>
     <main class="card">
       <img class="banner" src="assets/banner.webp" alt="Man on a cliff" />
       <header class="intro">
