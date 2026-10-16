@@ -189,14 +189,6 @@ h1 {
   flex: none;
 }
 
-footer {
-  color: var(--muted);
-  font-size: 0.85rem;
-  text-align: center;
-  position: relative;
-  z-index: 1;
-}
-
 @media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;
