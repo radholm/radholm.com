@@ -65,16 +65,19 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
       - name: Setup SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          DEPLOY_HOST: ${{ secrets.HOST }}
         run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H "${{ secrets.HOST }}" >> ~/.ssh/known_hosts
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf '%s ssh-ed25519 %s\n' "$DEPLOY_HOST" 'AAAAC3NzaC1lZDI1NTE5AAAAIKgkJh29TN0DG/WZqERUm8mZiczgvfCLCGwUDUSiBiv1' > ~/.ssh/known_hosts
       - name: Pull Latest Code on VPS
+        env:
+          DEPLOY_USER: ${{ secrets.SSH_USER }}
+          DEPLOY_HOST: ${{ secrets.HOST }}
         run: |
-          ssh "${{ secrets.SSH_USER }}"@"${{ secrets.HOST }}" "
-            cd /var/www/ &&
-            git fetch origin main &&
-            git reset --hard origin/main &&
-            sed -i 's|href=\"style.css\"|href=\"style.css?v=${{ github.sha }}\"|' radholm/index.html
-          "
+          ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o IdentitiesOnly=yes \
+            -i ~/.ssh/id_ed25519 "$DEPLOY_USER@$DEPLOY_HOST" \
+            'sudo -n /usr/local/sbin/deploy-radholm'
